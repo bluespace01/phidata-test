@@ -7,6 +7,8 @@ from phi.knowledge.text import TextKnowledgeBase
 from phi.embedder.ollama import OllamaEmbedder
 from pathlib import Path
 
+import time
+
 
 vector_db=LanceDb(
   table_name="articles",
@@ -30,18 +32,25 @@ knowledge_base.load(recreate=True)
 knowledge_agent = Agent(
   knowledge=knowledge_base,
   search_knowledge=True,
-  debug_mode=True,
+  debug_mode=False,
   show_tool_calls=True,
-  markdown=True,
+  markdown=False,
 )
+
+start_time = time.time()
+print(f"Start time: {start_time}")
 
 knowledge_agent.print_response(
 #   message="How is MongoDB doing?", 
     message="What is MongoDB IPO date and price?", 
-    markdown=True,
+    markdown=False,
     stream=True,
-    debug_mode=True,
+    debug_mode=False
 )
+
+end_time = time.time()
+print(f"End time: {end_time}")
+print(f"Time taken: {end_time - start_time}s")
 
 # agent = Agent(
 #   model=Ollama(id="llama3.2"),
